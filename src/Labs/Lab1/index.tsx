@@ -186,7 +186,7 @@ tag to tell browsers to render the gaps.
         </form>
         <h5>Text boxes</h5>
         <label>Biography:</label><br/>
-        <textarea cols="20" rows="25"
+        <textarea cols={40} rows={25}
                   placeholder="Biography"
                   title="tooltip">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec erat fermentum, ultrices mauris ut, gravida quam. Vivamus aliquet ultrices massa. Ut lectus mi, commodo vel libero varius, laoreet tincidunt libero. Integer mattis at ipsum at tempus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Etiam consequat dolor nisi, eget congue arcu molestie sed. In ac augue lacus. Cras eleifend sapien nec tortor consequat pellentesque. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet, nibh elementum finibus imperdiet, enim neque lacinia enim, in bibendum nibh turpis suscipit ante. Etiam a urna sodales orci faucibus iaculis quis et magna. Vestibulum eu augue nisl. Aliquam condimentum nisi ac molestie pulvinar. Vivamus vel ultricies turpis, a mattis neque.
 
