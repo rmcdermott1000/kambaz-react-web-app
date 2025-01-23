@@ -1,4 +1,3 @@
-import React from "react";
 import { ListGroup } from "react-bootstrap";
 import { FaSearch, FaPlus } from "react-icons/fa";
 import { BsGripVertical } from "react-icons/bs";

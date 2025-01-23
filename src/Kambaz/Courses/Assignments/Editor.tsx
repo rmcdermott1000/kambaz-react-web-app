@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Button, Row, Col, Container } from "react-bootstrap";
 
 export default function AssignmentEditor() {
