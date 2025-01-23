@@ -1,126 +1,110 @@
+import React from "react";
+import { Form, Button, Row, Col, Container } from "react-bootstrap";
+
 export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">Assignment Name</label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of
-        </textarea>
-        <br />
-        <table>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-group">Assignment Groups</label>
-            </td>
-            <td>
-                <select id="wd-group">
-                    <option selected value="ASSIGNMENTS">
-                    ASSIGNMENTS</option>
-                </select>
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
-            <td>
-                <select id="wd-display-grade-as">
-                    <option selected value="percentage">
-                    Percentage</option>
-                </select>
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-                <select id="wd-submission-type">
-                    <option selected value="online">
-                    Online</option>
-                </select>
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-                <label>Online Entry Options</label><br/>
+  return (
+    <div id="wd-assignments-editor">
+      <Container>
+        <Form>
+          <Form.Group className="mb-3" controlId="wd-name">
+            <Form.Label>Assignment Name</Form.Label>
+            <Form.Control
+              type="text"
+              value="A1 - ENV + HTML"
+              placeholder="Enter assignment name"
+            />
+          </Form.Group>
 
-                <input type="checkbox" name="online-entry-options" id="wd-text-entry"/>
-                <label htmlFor="wd-text-entry">Text Entry</label><br/>
+          <Form.Group className="mb-3" controlId="wd-description">
+            <Form.Label>Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value="The assignment is available online. Submit a link to the landing page of"
+              placeholder="Enter description"
+            />
+          </Form.Group>
 
-                <input type="checkbox" name="online-entry-options" id="wd-website-url"/>
-                <label htmlFor="wd-website-url">Website URL</label><br/>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-points">
+              <Form.Label>Points</Form.Label>
+              <Form.Control type="number" value={100} />
+            </Form.Group>
+          </Row>
 
-                <input type="checkbox" name="online-entry-options" id="wd-media-recordings"/>
-                <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-group">
+              <Form.Label>Assignment Groups</Form.Label>
+              <Form.Control as="select">
+                <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+              </Form.Control>
+            </Form.Group>
+          </Row>
 
-                <input type="checkbox" name="online-entry-options" id="wd-student-annotation"/>
-                <label htmlFor="wd-student-annotation">Student Annotation</label>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-display-grade-as">
+              <Form.Label>Display Grade As</Form.Label>
+              <Form.Control as="select">
+                <option value="percentage">Percentage</option>
+              </Form.Control>
+            </Form.Group>
+          </Row>
 
-                <input type="checkbox" name="online-entry-options" id="wd-file-upload"/>
-                <label htmlFor="wd-file-upload">File Upload</label>
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-submission-type">
+              <Form.Label>Submission Type</Form.Label>
+              <Form.Control as="select">
+                <option value="online">Online</option>
+              </Form.Control>
+            </Form.Group>
+          </Row>
 
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign-to">Assign To</label>
-            </td>
-            <td>
-              <input id="wd-assign-to" value={"Everyone"} />
-            </td>
-            </tr>
-            <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-due-date">Due</label>
-            </td>
-            <td>
-              <input type="date" value="05/13/2024" id="wd-due-date"/>
-            </td>
-          </tr>
-          <br></br>
-            <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-available-from">Available From</label>
-            </td>
-            <td align="right" valign="top">
-              <label htmlFor="wd-available-until">Until</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <input type="date" value="05/13/2024" id="wd-available-from"/>
-            </td>
-            <td align="right" valign="top">
-              <input type="date" value="05/20/2024" id="wd-available-until"/>
-            </td>
-          </tr>
-          <tr>
-          </tr>
-          <tr>
-            
-            <td align="right" valign="top"></td>
-            <td align="right" valign="top">
-                <button id="wd-save-assignment">Cancel</button>
-                <button id="wd-cancel-assignment">Save</button>
-            </td>
-          </tr>
-          </table> 
-       
-      </div>
-  );}
-  
+          <fieldset className="mb-3">
+            <Form.Label>Online Entry Options</Form.Label>
+            <Form.Group controlId="wd-online-entry-options">
+              <Form.Check type="checkbox" label="Text Entry" id="wd-text-entry" />
+              <Form.Check type="checkbox" label="Website URL" id="wd-website-url" />
+              <Form.Check type="checkbox" label="Media Recordings" id="wd-media-recordings" />
+              <Form.Check type="checkbox" label="Student Annotation" id="wd-student-annotation" />
+              <Form.Check type="checkbox" label="File Upload" id="wd-file-upload" />
+            </Form.Group>
+          </fieldset>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-assign-to">
+              <Form.Label>Assign To</Form.Label>
+              <Form.Control type="text" value="Everyone" />
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-due-date">
+              <Form.Label>Due</Form.Label>
+              <Form.Control type="date" value="2024-05-13" />
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} md={4} controlId="wd-available-from">
+              <Form.Label>Available From</Form.Label>
+              <Form.Control type="date" value="2024-05-13" />
+            </Form.Group>
+            <Form.Group as={Col} md={4} controlId="wd-available-until">
+              <Form.Label>Until</Form.Label>
+              <Form.Control type="date" value="2024-05-20" />
+            </Form.Group>
+          </Row>
+
+          <Row className="mb-3">
+            <Col className="d-flex justify-content-end">
+              <Button variant="secondary" className="me-2">
+                Cancel
+              </Button>
+              <Button variant="primary">Save</Button>
+            </Col>
+          </Row>
+        </Form>
+      </Container>
+    </div>
+  );
+}
