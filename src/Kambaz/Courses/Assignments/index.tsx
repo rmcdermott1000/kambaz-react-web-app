@@ -4,8 +4,15 @@ import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { AiOutlineArrowDown } from "react-icons/ai";
 import { IoEllipsisVertical } from "react-icons/io5";
+import { useParams } from "react-router";
+import * as db from "../../Database"; // Import the database to access assignments
 
 export default function Assignments() {
+  const { cid } = useParams(); // Retrieve the course ID from the URL
+
+  // Filter assignments based on the selected course ID
+  const assignments = db.assignments.filter((assignment) => assignment.course === cid);
+
   return (
     <div id="wd-assignments" className="p-4">
       <div className="d-flex justify-content-between mb-4">
@@ -59,50 +66,28 @@ export default function Assignments() {
           </div>
         </ListGroup.Item>
 
-        <ListGroup.Item className="wd-lesson p-3 d-flex justify-content-between align-items-start">
-          <div>
-            <BsGripVertical className="me-2 fs-3" />
-            <a href="#/Kambaz/Courses/1234/Assignments/123" className="text-decoration-none">
-              Assignment 1 - ENV + HTML
-            </a>
-            <div className="text-muted small mt-1">
-              Multiple Modules | <b>Not Available until</b> May 6 at 12:00 AM
+        {assignments.map((assignment) => (
+          <ListGroup.Item
+            key={assignment._id}
+            className="wd-lesson p-3 d-flex justify-content-between align-items-start"
+          >
+            <div>
+              <BsGripVertical className="me-2 fs-3" />
+              <a
+                href={`#/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                className="text-decoration-none"
+              >
+                {assignment.title}
+              </a>
+              <div className="text-muted small mt-1">
+              Multiple Modules | <b>Not Available until</b> {new Date(assignment.availableDate).toLocaleString()}
               <br />
-              <b>Due:</b> May 13 at 11:59 PM | 100 pts
+              <b>Due:</b> {new Date(assignment.dueDate).toLocaleString()} | {assignment.points} pts
             </div>
-          </div>
-          <AssignmentControlButtons />
-        </ListGroup.Item>
-
-        <ListGroup.Item className="wd-lesson p-3 d-flex justify-content-between align-items-start">
-          <div>
-            <BsGripVertical className="me-2 fs-3" />
-            <a href="#/Kambaz/Courses/1234/Assignments/124" className="text-decoration-none">
-              Assignment 2 - CSS + BOOTSTRAP
-            </a>
-            <div className="text-muted small mt-1">
-              Multiple Modules | <b>Not Available until</b> May 13 at 12:00 AM
-              <br />
-              <b>Due:</b> May 20 at 11:59 PM | 100 pts
             </div>
-          </div>
-          <AssignmentControlButtons />
-        </ListGroup.Item>
-
-        <ListGroup.Item className="wd-lesson p-3 d-flex justify-content-between align-items-start">
-          <div>
-            <BsGripVertical className="me-2 fs-3" />
-            <a href="#/Kambaz/Courses/1234/Assignments/125" className="text-decoration-none">
-              Assignment 3 - JAVASCRIPT + REACT
-            </a>
-            <div className="text-muted small mt-1">
-              Multiple Modules | <b>Not Available until</b> May 20 at 12:00 AM
-              <br />
-              <b>Due:</b> May 27 at 11:59 PM | 100 pts
-            </div>
-          </div>
-          <AssignmentControlButtons />
-        </ListGroup.Item>
+            <AssignmentControlButtons />
+          </ListGroup.Item>
+        ))}
       </ListGroup>
     </div>
   );
