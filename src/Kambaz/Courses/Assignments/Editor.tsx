@@ -34,11 +34,6 @@ type OnlineEntryOptions = {
   fileUpload: boolean;
 };
 
-interface YourComponentProps {
-  onlineEntryOptions?: OnlineEntryOptions;
-  handleCheckboxChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
 export default function AssignmentEditor() {
   const { cid, aid } = useParams(); // Get course ID and assignment ID
   const navigate = useNavigate();

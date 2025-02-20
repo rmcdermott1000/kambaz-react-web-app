@@ -5,7 +5,6 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table.tsx";
 
-import { courses } from "../Database";
 import { FaAlignJustify } from "react-icons/fa6";
 import { Route, Routes, useLocation, useParams } from "react-router";
 
