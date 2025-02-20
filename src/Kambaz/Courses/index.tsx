@@ -9,7 +9,7 @@ import { courses } from "../Database";
 import { FaAlignJustify } from "react-icons/fa6";
 import { Route, Routes, useLocation, useParams } from "react-router";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams(); 
   const course = courses.find((course) => course._id === cid); // Find course
   const { pathname } = useLocation(); // Get current route

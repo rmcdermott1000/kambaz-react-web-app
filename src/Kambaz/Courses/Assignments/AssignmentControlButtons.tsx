@@ -1,8 +1,26 @@
-import { IoEllipsisVertical } from "react-icons/io5";
-import GreenCheckmark from "./GreenCheckmark";
-export default function AssignmentControlButtons() {
+import React from "react";
+import { FaEdit } from "react-icons/fa";
+
+interface AssignmentControlButtonsProps {
+  assignmentId: string;
+  deleteAssignment: (id: string) => void;
+  editAssignment: (id: string) => void;
+}
+
+const AssignmentControlButtons: React.FC<AssignmentControlButtonsProps> = ({ 
+  assignmentId, 
+  editAssignment 
+}) => {
   return (
-    <div className="float-end">
-      <GreenCheckmark />
-      <IoEllipsisVertical className="fs-4" />
-    </div> );}
+    <div className="d-flex">
+      <button
+        className="btn btn-outline-secondary btn-sm me-2"
+        onClick={() => editAssignment(assignmentId)}
+      >
+        <FaEdit />
+      </button>
+    </div>
+  );
+};
+
+export default AssignmentControlButtons;
