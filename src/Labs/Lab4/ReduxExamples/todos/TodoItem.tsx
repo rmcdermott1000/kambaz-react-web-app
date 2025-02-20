@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteTodo, setTodo } from "./todosReducer";
 export default function TodoItem({ todo: todo = { id: 1, title: "" }
