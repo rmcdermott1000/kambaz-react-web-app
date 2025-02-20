@@ -3,10 +3,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from "react-redux";
-import * as db from "./Database"
 import { useState } from "react";
 import { enrollInCourse, unenrollFromCourse } from "./enrollmentSlice";
-import ProtectedCourseRoute from "./Courses/ProtectedCourseRoute";
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse,
   deleteCourse, updateCourse }: {
