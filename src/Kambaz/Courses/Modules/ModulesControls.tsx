@@ -1,11 +1,26 @@
 import { FaPlus } from "react-icons/fa6";
 import GreenCheckmark from "./GreenCheckmark";
 import { Button, Dropdown } from "react-bootstrap";
+import ModuleEditor from "./ModuleEditor";
+import { Modal } from "bootstrap";
 
-export default function ModulesControls() {
+export default function ModulesControls(
+ 
+{ moduleName, setModuleName, addModule }:
+{ moduleName: string; setModuleName: (title: string) => void; addModule: () => void; }) 
+{
+
+  const openModal = () => {
+    const modalElement = document.getElementById("wd-add-module-dialog");
+    if (modalElement) {
+      const modal = new Modal(modalElement);
+      modal.show();  // Manually show the modal
+    }
+  };
+
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+      <Button onClick={openModal} variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn" >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
       </Button>
@@ -37,6 +52,8 @@ export default function ModulesControls() {
       <Button variant="secondary" size="lg" className="me-2 float-end" id="wd-collapse-all">
         Collapse All
       </Button>
+      <ModuleEditor dialogTitle="Add Module" moduleName={moduleName}
+                    setModuleName={setModuleName} addModule={addModule} />
     </div>
   );
 }

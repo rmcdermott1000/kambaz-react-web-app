@@ -1,52 +1,33 @@
-import { Link } from "react-router-dom";
-import { Form, Row, Col, Card } from "react-bootstrap";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { setCurrentUser } from "./reducer";
+import { useDispatch } from "react-redux";
+import * as db from "../Database";
 
 export default function Signin() {
+  const [credentials, setCredentials] = useState<any>({});
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const signin = () => {
+    const user = db.users.find(
+      (u: any) => u.username === credentials.username && u.password === credentials.password);
+    if (!user) return;
+    dispatch(setCurrentUser(user));
+    navigate("/Kambaz/Dashboard");
+  };
+
   return (
-      <Row className="justify-content-center">
-        <Col md={10}>
-          <Card className="p-4 shadow-sm">
-            <h3 className="text-center mb-4">Sign in</h3>
+    <div id="wd-signin-screen">
+      <h1>Sign in</h1>
+      <input defaultValue={credentials.username}
+             onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+             className="form-control mb-2" placeholder="username" id="wd-username" />
+      <input defaultValue={credentials.password}
+             onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+             className="form-control mb-2" placeholder="password" type="password" id="wd-password" />
+      <button onClick={signin} id="wd-signin-btn" className="btn btn-primary w-100" > Sign in </button>
 
-            <Form>
-              <Form.Group className="mb-3" controlId="wd-username">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter your username"
-                />
-              </Form.Group>
+      <Link id="wd-signup-link" to="/Kambaz/Account/Signup"> Sign up </Link>
+    </div>
+);}
 
-              <Form.Group className="mb-3" controlId="wd-password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter your password"
-                />
-              </Form.Group>
-
-              <div className="d-grid gap-2">
-                <Link
-                  id="wd-signin-btn"
-                  to="/Kambaz/Dashboard"
-                  className="btn btn-primary"
-                >
-                  Sign in
-                </Link>
-              </div>
-
-              <div className="text-center mt-3">
-                <Link
-                  id="wd-signup-link"
-                  to="/Kambaz/Account/Signup"
-                  className="text-secondary"
-                >
-                  Don't have an account? Sign up
-                </Link>
-              </div>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
-  );
-}
