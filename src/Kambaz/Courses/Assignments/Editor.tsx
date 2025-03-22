@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 import { addAssignment, updateAssignment } from "./reducer";
 import * as coursesClient from "../client";
 import * as assignmentsClient from "./client";

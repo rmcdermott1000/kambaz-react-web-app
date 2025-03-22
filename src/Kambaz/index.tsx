@@ -4,7 +4,6 @@ import Dashboard from "./Dashboard";
 import Courses from "./Courses";
 import Account from "./Account";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import Session from "../Account/Session";
 import * as userClient from "./Account/client";
 import * as courseClient from "./Courses/client";
@@ -39,7 +38,7 @@ export default function Kambaz() {
 
   };
   const deleteCourse = async (courseId: any) => {
-    const status = await courseClient.deleteCourse(courseId);
+    await courseClient.deleteCourse(courseId);
     setCourses(courses.filter((course) => course._id !== courseId));
   };
   const updateCourse =  async () => {
