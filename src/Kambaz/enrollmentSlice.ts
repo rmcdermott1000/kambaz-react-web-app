@@ -1,18 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
-import { enrollments} from "./Database";
 
-const initialState = {
-  enrollments: enrollments
+// interface Enrollment {
+//   _id: string;
+//   user: string;
+//   course: string;
+// }
+
+interface EnrollmentState {
+  enrollments: any[];
+}
+
+const initialState:EnrollmentState = {
+  enrollments: []
 };
 
 const enrollmentSlice = createSlice({
   name: "enrollments",
   initialState,
   reducers: {
+    setEnrollments: (state, action) => {
+      state.enrollments = action.payload;
+    },
+
     enrollInCourse: (state, { payload }) => {
         const existingEnrollment = state.enrollments.find(
-          (e) => e.user === payload.userId && e.course === payload.courseId
+          (e:any) => e.user === payload.userId && e.course === payload.courseId
         );
   
         if (!existingEnrollment) {
@@ -25,11 +38,11 @@ const enrollmentSlice = createSlice({
       },
     unenrollFromCourse: (state, { payload }) => {
       state.enrollments = state.enrollments.filter(
-        (e) => e.user !== payload.userId || e.course !== payload.courseId
+        (e:any) => e.user !== payload.userId || e.course !== payload.courseId
       );
     },
   },
 });
 
-export const { enrollInCourse, unenrollFromCourse } = enrollmentSlice.actions;
+export const { enrollInCourse, unenrollFromCourse, setEnrollments } = enrollmentSlice.actions;
 export default enrollmentSlice.reducer;

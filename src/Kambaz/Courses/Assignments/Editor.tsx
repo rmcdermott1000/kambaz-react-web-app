@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Container, Form, Row, Col } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { addAssignment, updateAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 
 interface Assignment {
   _id: string;
@@ -35,9 +37,22 @@ type OnlineEntryOptions = {
 };
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams(); // Get course ID and assignment ID
+  const { cid, aid } = useParams<{ cid: string, aid: string }>(); // Get course ID and assignment ID
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const createAssignmentForCourse = async (assignment: any) => {
+    if (!aid) return;
+    if (!cid) return;
+    const newAssignment = await coursesClient.createAssignmentForCourse(cid, { ...assignment, course: cid, _id: aid });
+    dispatch(addAssignment(newAssignment));
+  };
+
+  const saveAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
 
   // Get assignment from Redux store if it exists
   const existingAssignment = useSelector((state: any) =>
@@ -83,7 +98,7 @@ export default function AssignmentEditor() {
   // Handle Save
   const handleSave = () => {
     const newAssignment = {
-      _id: aid || uuidv4(), // Use existing ID if editing
+      _id: aid, // Use existing ID if editing
       title,
       description,
       points,
@@ -97,11 +112,15 @@ export default function AssignmentEditor() {
       course: cid, // Associate with the course ID
     };
 
-    if (aid) {
+    if (aid != "Editor") {
       // Update existing assignment
+      console.log(aid)
+      saveAssignment(newAssignment);
       dispatch(updateAssignment(newAssignment));
     } else {
       // Create new assignment
+      createAssignmentForCourse(newAssignment);
+      console.log('here');
       dispatch(addAssignment(newAssignment));
     }
 
