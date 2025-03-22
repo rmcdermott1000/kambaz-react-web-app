@@ -30,10 +30,10 @@ export default function TOC() {
        <Nav.Link href="https://github.com/rmcdermott1000">My GitHub</Nav.Link>
      </Nav.Item>
      <Nav.Item>
-       <Nav.Link href="https://github.com/rmcdermott1000/kambaz-react-web-app">web app repo</Nav.Link>
+       <Nav.Link href="https://github.com/rmcdermott1000/kambaz-node-server-app">server repo</Nav.Link>
      </Nav.Item>
      <Nav.Item>
-       <Nav.Link href="https://github.com/rmcdermott1000/kambaz-node-server-app">server repo</Nav.Link>
+       <Nav.Link href="https://kambaz-node-server-app-ciq1.onrender.com">render</Nav.Link>
      </Nav.Item>
    </Nav>
 );}
