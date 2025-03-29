@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 import { BsGripVertical, BsTrash } from "react-icons/bs";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { editAssignment, updateAssignment, deleteAssignment } from "./reducer";
+import { editAssignment, updateAssignment, deleteAssignment, setAssignments } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";  // Import client functions
 
 // Define Assignment Type
 interface Assignment {
@@ -29,13 +31,15 @@ export default function Assignments() {
   const { assignments } = useSelector((state: any) => state.assignmentReducer);
   const dispatch = useDispatch();
 
+
   const handleDelete = (assignment: Assignment) => {
     setAssignmentToDelete(assignment);
     setShowDeleteDialog(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (assignmentToDelete) {
+      await assignmentsClient.deleteAssignment(assignmentToDelete._id);
       dispatch(deleteAssignment(assignmentToDelete._id));
     }
     setShowDeleteDialog(false);
@@ -44,6 +48,16 @@ export default function Assignments() {
   const cancelDelete = () => {
     setShowDeleteDialog(false);
   };
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+
 
   return (
     <div className="wd-assignments p-4">
@@ -69,7 +83,6 @@ export default function Assignments() {
       {/* Assignments List */}
       <ListGroup className="rounded-0" id="wd-assignments-list">
         {assignments
-          .filter((assignment: Assignment) => assignment.course === cid) // Filter assignments by course ID
           .map((assignment: Assignment) => (
             <ListGroup.Item
               key={assignment._id}

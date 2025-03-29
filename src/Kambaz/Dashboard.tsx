@@ -3,8 +3,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { enrollInCourse, unenrollFromCourse } from "./enrollmentSlice";
+import { useEffect, useState } from "react";
+import { enrollInCourse, unenrollFromCourse, setEnrollments } from "./enrollmentSlice";
+import * as coursesClient from "./Courses/client";
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse,
   deleteCourse, updateCourse }: {
@@ -17,6 +18,30 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
   const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
 
   const [showAllCourses, setShowAllCourses] = useState(false);
+
+
+  const enroll = async (courseId:string) => {
+    
+    await coursesClient.createEnrollment(currentUser._id, courseId);
+    dispatch(enrollInCourse({ userId: currentUser._id, courseId: course._id }))
+    fetchEnrollments();
+  };
+
+  const unenroll = async (courseId:string) => {
+    
+    await coursesClient.deleteEnrollment(currentUser._id, courseId);
+    dispatch(unenrollFromCourse({ userId: currentUser._id, courseId: course._id }))
+    fetchEnrollments();
+  };
+
+
+  const fetchEnrollments = async () => {
+    const modules = await coursesClient.findEnrollments();
+    dispatch(setEnrollments(modules));
+  };
+  useEffect(() => {
+    fetchEnrollments();
+  }, []);
 
   // Toggle function for showing all or enrolled courses
   const toggleCourseView = () => {
@@ -69,8 +94,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses
-            .filter((course) =>
+          {courses .filter((course) =>
               showAllCourses
                 ? true
                 : enrollments.some(
@@ -79,6 +103,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                       enrollment.course === course._id
                   )
             )
+            
             .map((course) => (
               <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card>
@@ -99,14 +124,14 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                         ) ? (
                           <button
                             className="btn btn-danger"
-                            onClick={() => dispatch(unenrollFromCourse({ userId: currentUser._id, courseId: course._id }))}
+                            onClick={() => unenroll(course._id) }
                           >
                             Unenroll
                           </button>
                         ) : (
                           <button
                             className="btn btn-success"
-                            onClick={() => dispatch(enrollInCourse({ userId: currentUser._id, courseId: course._id }))}
+                            onClick={() => enroll(course._id)}
                           >
                             Enroll
                           </button>

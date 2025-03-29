@@ -21,10 +21,19 @@ export default function TOC() {
        <Nav.Link href="#/Labs/Lab4" className={`nav-link ${pathname.includes("Lab4") ? "active" : ""}`}>Lab 4</Nav.Link>
      </Nav.Item>
      <Nav.Item>
+       <Nav.Link href="#/Labs/Lab5" className={`nav-link ${pathname.includes("Lab5") ? "active" : ""}`}>Lab 5</Nav.Link>
+     </Nav.Item>
+     <Nav.Item>
        <Nav.Link href="#/Kambaz">Kambaz</Nav.Link>
      </Nav.Item>
      <Nav.Item>
        <Nav.Link href="https://github.com/rmcdermott1000">My GitHub</Nav.Link>
+     </Nav.Item>
+     <Nav.Item>
+       <Nav.Link href="https://github.com/rmcdermott1000/kambaz-node-server-app">server repo</Nav.Link>
+     </Nav.Item>
+     <Nav.Item>
+       <Nav.Link href="https://kambaz-node-server-app-ciq1.onrender.com">render</Nav.Link>
      </Nav.Item>
    </Nav>
 );}
