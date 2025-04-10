@@ -51,6 +51,7 @@ export default function Assignments() {
 
   const fetchAssignments = async () => {
     const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    console.log(assignments);
     dispatch(setAssignments(assignments));
   };
   useEffect(() => {
