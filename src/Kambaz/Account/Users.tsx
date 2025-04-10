@@ -4,7 +4,7 @@ import * as client from "./client";
 import { FormControl } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 export default function Users() {
- const [name, setName] = useState("");
+ const [, setName] = useState("");
  const [users, setUsers] = useState<any[]>([]);
  const [role, setRole] = useState("");
  const createUser = async () => {
@@ -22,6 +22,7 @@ export default function Users() {
 
   const filterUsersByName = async (name: string) => {
     setName(name);
+    
     if (name) {
       console.log(name);
       const users = await client.findUsersByPartialName(name);

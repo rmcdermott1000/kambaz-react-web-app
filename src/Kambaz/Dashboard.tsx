@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { enrollInCourse, unenrollFromCourse, setEnrollments } from "./enrollmentSlice";
+import {  setEnrollments } from "./enrollmentSlice";
 import * as coursesClient from "./Courses/client";
 
 export default function Dashboard({ courses, course, setCourse, addNewCourse, deleteCourse, updateCourse , enrolling, setEnrolling, updateEnrollment  }
@@ -23,6 +23,8 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse, de
 
   const fetchEnrollments = async () => {
     const modules = await coursesClient.findEnrollments();
+    console.log(enrolling);
+    setEnrolling(enrolling);
     dispatch(setEnrollments(modules));
   };
   useEffect(() => {

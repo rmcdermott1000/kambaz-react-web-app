@@ -10,6 +10,7 @@ export default function PeopleTable({ users = [] }: { users?: any[] }) {
 
   useEffect(() => {
       coursesClient.findUsersForCourse(cid!).then(setUsers);
+      users = users;
     }, [cid]);
   return (
     <div id="wd-people-table">
