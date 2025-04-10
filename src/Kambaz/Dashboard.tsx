@@ -4,39 +4,27 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { enrollInCourse, unenrollFromCourse, setEnrollments } from "./enrollmentSlice";
+import {  setEnrollments } from "./enrollmentSlice";
 import * as coursesClient from "./Courses/client";
 
-export default function Dashboard({ courses, course, setCourse, addNewCourse,
-  deleteCourse, updateCourse }: {
+export default function Dashboard({ courses, course, setCourse, addNewCourse, deleteCourse, updateCourse , enrolling, setEnrolling, updateEnrollment  }
+  : {
   courses: any[]; course: any; setCourse: (course: any) => void;
   addNewCourse: () => void; deleteCourse: (course: any) => void;
-  updateCourse: () => void; })
+  updateCourse: () => void; enrolling: boolean; setEnrolling: (enrolling: boolean) => void;
+  updateEnrollment: (courseId: string, enrolled: boolean) => void })
  {
 
+  
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
 
   const [showAllCourses, setShowAllCourses] = useState(false);
 
-
-  const enroll = async (courseId:string) => {
-    
-    await coursesClient.createEnrollment(currentUser._id, courseId);
-    dispatch(enrollInCourse({ userId: currentUser._id, courseId: course._id }))
-    fetchEnrollments();
-  };
-
-  const unenroll = async (courseId:string) => {
-    
-    await coursesClient.deleteEnrollment(currentUser._id, courseId);
-    dispatch(unenrollFromCourse({ userId: currentUser._id, courseId: course._id }))
-    fetchEnrollments();
-  };
-
-
   const fetchEnrollments = async () => {
     const modules = await coursesClient.findEnrollments();
+    console.log(enrolling);
+    setEnrolling(enrolling);
     dispatch(setEnrollments(modules));
   };
   useEffect(() => {
@@ -46,12 +34,22 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
   // Toggle function for showing all or enrolled courses
   const toggleCourseView = () => {
     setShowAllCourses((prevState: boolean) => !prevState);
+    
   };
+
+  const toggleEnrollments= (courseid:any, bool:boolean) => {
+    updateEnrollment(courseid, bool)
+    fetchEnrollments();
+    fetchEnrollments();
+    fetchEnrollments();
+    fetchEnrollments();
+  }
   const dispatch = useDispatch();
 
   return (
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1>
+      
       {currentUser && currentUser.role === "FACULTY" && (
       <>
       <h5>New Course
@@ -76,6 +74,7 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
           </>
     
       )}
+      
       {currentUser && currentUser.role === "STUDENT" && (
         <>
           <button
@@ -94,15 +93,18 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
       <hr />
       <div id="wd-dashboard-courses">
         <Row xs={1} md={5} className="g-4">
-          {courses .filter((course) =>
-              showAllCourses
-                ? true
-                : enrollments.some(
-                    (enrollment:any) =>
-                      enrollment.user === currentUser._id &&
-                      enrollment.course === course._id
-                  )
-            )
+        {courses.filter((course) => course !== null).filter((course) =>
+          currentUser.role === "STUDENT"
+            ? showAllCourses
+              ? true
+              : enrollments.some(
+                  (enrollment: any) =>
+                    enrollment.user === currentUser._id &&
+                    enrollment.course === course._id
+                )
+            : true
+        )
+
             
             .map((course) => (
               <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
@@ -124,14 +126,14 @@ export default function Dashboard({ courses, course, setCourse, addNewCourse,
                         ) ? (
                           <button
                             className="btn btn-danger"
-                            onClick={() => unenroll(course._id) }
+                            onClick={() => toggleEnrollments(course._id, false) }
                           >
                             Unenroll
                           </button>
                         ) : (
                           <button
                             className="btn btn-success"
-                            onClick={() => enroll(course._id)}
+                            onClick={() => toggleEnrollments(course._id, true)}
                           >
                             Enroll
                           </button>
